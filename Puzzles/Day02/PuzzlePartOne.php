@@ -12,7 +12,6 @@ class PuzzlePartOne extends Puzzle
             $splitLine = explode("\t", trim($line));
 
             $biggestNumber = max($splitLine);
-            var_dump($biggestNumber);
             $smallestNumber = min($splitLine);
             $difference = $biggestNumber - $smallestNumber;
             $this->sum += $difference;
