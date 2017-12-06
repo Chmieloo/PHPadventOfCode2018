@@ -1,38 +1,33 @@
---- Day 5: A Maze of Twisty Trampolines, All Alike ---
+--- Day 6: Memory Reallocation ---
 
-An urgent interrupt arrives from the CPU: it's trapped in a maze of jump instructions, and it would like assistance from any programs with spare cycles to help find the exit.
+A debugger program here is having an issue: it is trying to repair a memory reallocation routine, but it keeps getting stuck in an infinite loop.
 
-The message includes a list of the offsets for each jump. Jumps are relative: -1 moves to the previous instruction, and 2 skips the next one. Start at the first instruction in the list. The goal is to follow the jumps until one leads outside the list.
+In this area, there are sixteen memory banks; each memory bank can hold any number of blocks. The goal of the reallocation routine is to balance the blocks between the memory banks.
 
-In addition, these instructions are a little strange; after each jump, the offset of that instruction increases by 1. So, if you come across an offset of 3, you would move three instructions forward, but change it to a 4 for the next time it is encountered.
+The reallocation routine operates in cycles. In each cycle, it finds the memory bank with the most blocks (ties won by the lowest-numbered memory bank) and redistributes those blocks among the banks. To do this, it removes all of the blocks from the selected bank, then moves to the next (by index) memory bank and inserts one of the blocks. It continues doing this until it runs out of blocks; if it reaches the last memory bank, it wraps around to the first one.
 
-For example, consider the following list of jump offsets:
+The debugger would like to know how many redistributions can be done before a blocks-in-banks configuration is produced that has been seen before.
 
-0
-3
-0
-1
--3
-Positive jumps ("forward") move downward; negative jumps move upward. For legibility in this example, these offset values will be written all on one line, with the current instruction marked in parentheses. The following steps would be taken before an exit is found:
+For example, imagine a scenario with only four memory banks:
 
-(0) 3  0  1  -3  - before we have taken any steps.
-(1) 3  0  1  -3  - jump with offset 0 (that is, don't jump at all). Fortunately, the instruction is then incremented to 1.
- 2 (3) 0  1  -3  - step forward because of the instruction we just modified. The first instruction is incremented again, now to 2.
- 2  4  0  1 (-3) - jump all the way to the end; leave a 4 behind.
- 2 (4) 0  1  -2  - go back to where we just were; increment -3 to -2.
- 2  5  0  1  -2  - jump 4 steps forward, escaping the maze.
-In this example, the exit is reached in 5 steps.
+The banks start with 0, 2, 7, and 0 blocks. The third bank has the most blocks, so it is chosen for redistribution.
+Starting with the next bank (the fourth bank) and then continuing to the first bank, the second bank, and so on, the 7 blocks are spread out over the memory banks. The fourth, first, and second banks get two blocks each, and the third bank gets one back. The final result looks like this: 2 4 1 2.
+Next, the second bank is chosen because it contains the most blocks (four). Because there are four memory banks, each gets one block. The result is: 3 1 2 3.
+Now, there is a tie between the first and fourth memory banks, both of which have three blocks. The first bank wins the tie, and its three blocks are distributed evenly over the other three banks, leaving it with none: 0 2 3 4.
+The fourth bank is chosen, and its four blocks are distributed such that each of the four banks receives one: 1 3 4 1.
+The third bank is chosen, and the same thing happens: 2 4 1 2.
+At this point, we've reached a state we've seen before: 2 4 1 2 was already seen. The infinite loop is detected after the fifth block redistribution cycle, and so the answer in this example is 5.
 
-How many steps does it take to reach the exit?
+Given the initial block counts in your puzzle input, how many redistribution cycles must be completed before a configuration is produced that has been seen before?
 
-Your puzzle answer was 372671.
+Your puzzle answer was 4074.
 
 --- Part Two ---
 
-Now, the jumps are even stranger: after each jump, if the offset was three or more, instead decrease it by 1. Otherwise, increase it by 1 as before.
+Out of curiosity, the debugger would also like to know the size of the loop: starting from a state that has already been seen, how many block redistribution cycles must be performed before that same state is seen again?
 
-Using this rule with the above example, the process now takes 10 steps, and the offset values after finding the exit are left as 2 3 2 3 -1.
+In the example above, 2 4 1 2 is seen again after four cycles, and so the answer in that example would be 4.
 
-How many steps does it now take to reach the exit?
+How many cycles are in the infinite loop that arises from the configuration in your puzzle input?
 
-Your puzzle answer was 25608480.
+Your puzzle answer was 2793.

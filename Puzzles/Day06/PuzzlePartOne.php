@@ -31,7 +31,6 @@ class PuzzlePartOne extends Puzzle
                 $blocks[$insertIndex]++;
             }
             $afterBlocks = $blocks;
-            //var_dump($knownBlocks);
             if (in_array(join(" ", $afterBlocks), $knownBlocks)) {
                 break;
             } else {
