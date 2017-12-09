@@ -96,46 +96,22 @@ class Puzzle extends PuzzleAbstract
     {
         switch ($comp) {
             case '<':
-                if ($registers[$reg1] < $reg2) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($registers[$reg1] < $reg2);
                 break;
             case '<=':
-                if ($registers[$reg1] <= $reg2) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($registers[$reg1] <= $reg2);
                 break;
             case '>':
-                if ($registers[$reg1] > $reg2) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($registers[$reg1] > $reg2);
                 break;
             case '>=':
-                if ($registers[$reg1] >= $reg2) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($registers[$reg1] >= $reg2);
                 break;
             case '==':
-                if ($registers[$reg1] == $reg2) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($registers[$reg1] == $reg2);
                 break;
             case '!=':
-                if ($registers[$reg1] != $reg2) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return ($registers[$reg1] != $reg2);
                 break;
         }
     }

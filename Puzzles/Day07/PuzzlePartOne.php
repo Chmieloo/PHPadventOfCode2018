@@ -4,7 +4,7 @@ namespace Puzzles\Day07;
 
 class PuzzlePartOne extends Puzzle
 {
-    private $sum = 0;
+    private $solution = 0;
 
     public function processInput()
     {
@@ -14,7 +14,7 @@ class PuzzlePartOne extends Puzzle
             $array[$parts[0]] = [];
             $parts = array_filter($parts);
 
-            if ($parts[2] == '->') {
+            if (array_key_exists(2, $parts) && $parts[2] == '->') {
                 for ($i = 3; $i < count($parts); $i++) {
                     $string = trim($parts[$i], ",");
                     $array[$parts[0]][] = $string;
@@ -28,11 +28,11 @@ class PuzzlePartOne extends Puzzle
             $co = array_merge($co, $childrenArray);
         }
         $diff = array_diff(array_keys($array), $co);
-        var_dump($diff);
+        $this->solution = array_pop($diff);
     }
 
     public function renderSolution()
     {
-        echo 'Solution: ' . $this->sum . PHP_EOL;
+        echo 'Solution: ' . $this->solution . PHP_EOL;
     }
 }
