@@ -31,6 +31,7 @@ class PuzzlePartOne extends Puzzle
             $currentPosition += ($length + $skipSize) % $listLen;
             $skipSize += 1;
         }
+
         $this->solution = $list[0] * $list[1];
     }
 

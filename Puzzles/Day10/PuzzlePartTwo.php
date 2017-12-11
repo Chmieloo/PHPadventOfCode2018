@@ -41,6 +41,8 @@ class PuzzlePartTwo extends Puzzle
             }
         }
 
+        echo $currentPosition . ' ' . $skipSize . PHP_EOL;
+
         $string = '';
         for ($i = 0; $i < 16; $i++) {
             $chunk = array_slice($list, $i*16, 16);
