@@ -19,13 +19,12 @@ class PuzzlePartTwo extends Puzzle
 
         while ($currentIndex >= $start && $currentIndex <= $end) {
             $steps = $this->input[$currentIndex];
-            $oldIndex = $currentIndex;
-            $currentIndex = $currentIndex + $steps;
             if ($steps >= 3) {
-                $this->input[$oldIndex]--;
+                $this->input[$currentIndex]--;
             } else {
-                $this->input[$oldIndex]++;
+                $this->input[$currentIndex]++;
             }
+            $currentIndex = $currentIndex + $steps;
             $this->sum++;
         }
         $this->runTime = microtime(true) - $start;
