@@ -1,50 +1,36 @@
 <?php
 
-namespace Puzzles\Day12;
+namespace Puzzles\Day13;
 
 class PuzzlePartTwo extends Puzzle
 {
-    private $graphData = [];
-    private $visited = [];
-    private $allVisited = [];
+    private $layers = [];
 
     public function processInput()
     {
         foreach ($this->input as $line) {
-            $data = explode('<->', $line);
-            $connections = array_map('trim', explode(',', $data[1]));
-            $this->graphData[trim($data[0])] = $connections;
+            $data = explode(':', $line);
+            $this->layers[$data[0]] = trim($data[1]);
         }
 
-        $allVisited = [];
-        $x = 0;
-        foreach ($this->graphData as $key => $connected) {
-            if (!in_array($key, $allVisited)) {
-                $x++;
-            }
-            $this->visited = [];
-            $visits = $this->dfs($key);
-            $allVisited = array_unique(array_merge($allVisited, $visits));
-        }
+        $delay = 0;
+        $scanning = true;
+        $length = max(array_keys($this->layers));
 
-        $this->solution2 = $x;
-    }
-
-    /**
-     * @param $nodeKey
-     * @return array
-     */
-    protected function dfs($nodeKey)
-    {
-        $nodeData = $this->graphData[$nodeKey];
-        foreach ($nodeData as $node) {
-            if (!in_array($node, $this->visited)) {
-                $this->visited[] = $node;
-                $this->allVisited[$nodeKey][] = $node;
-                $this->dfs($node);
+        while($scanning) {
+            $scanning = false;
+            for ($i = 0; $i <= $length; $i++) {
+                if (array_key_exists($i, $this->layers)) {
+                    if (($i + $delay) % (($this->layers[$i] - 1) * 2) == 0) {
+                        $scanning = true;
+                        $delay++;
+                        break;
+                    }
+                }
             }
         }
-        return $this->visited;
+
+        $this->solution2 = $delay;
     }
 
     public function renderSolution()

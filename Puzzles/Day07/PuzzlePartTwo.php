@@ -19,11 +19,34 @@ class PuzzlePartTwo extends Puzzle
             if (count($parts) > 2 && $parts[2] == '->') {
                 for ($i = 3; $i < count($parts); $i++) {
                     $string = trim($parts[$i], ",");
-                    $array[$parts[0]][] = $string;
+                    $array[$parts[0]][$string] = 0;
                 }
+            } else {
+               // $string = trim($parts[$i], ",");
+               // $array[$parts[0]][$string] = 0;
             }
         }
 
+        $allCount = count ($array);
+        $parentCount = count(array_filter($array));
+
+        $children = [];
+        foreach ($array as $key => $node) {
+            if (!$array[$key]) {
+                $children[$key] = $node;
+            }
+        }
+
+        var_dump($children);
+
+        var_dump($allCount);
+        var_dump($parentCount);
+
+//        while ($allCount != $parentCount) {
+
+//        }
+
+        /*
         $this->weights = $weights;
 
         $co = [];
@@ -33,7 +56,7 @@ class PuzzlePartTwo extends Puzzle
         }
         $diff = array_diff(array_keys($array), $co);
 
-        //var_dump($diff);
+        
 
         $newArray = array_filter($array);
 
@@ -49,6 +72,7 @@ class PuzzlePartTwo extends Puzzle
 
 
         var_dump($newArray);
+        */
 
     }
 
