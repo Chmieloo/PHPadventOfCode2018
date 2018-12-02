@@ -5,18 +5,20 @@ namespace Puzzles\Day01;
 class PuzzlePartTwo extends Puzzle
 {
     private $sum = 0;
+    private $seen = [];
 
-    public function processInput()
+    public function processInput() 
     {
-        $string = $this->input[0];
-        $len = strlen($string);
-        $middle = $len / 2;
-        for ($i = 0; $i <= strlen($string) - 1; $i++) {
-            $next = $string[($i + $middle) % $len];
-            $current = $string[$i];
-
-            if ($next == $current) {
-                $this->sum += $current;
+        while (1) {
+            $line = trim(current($this->input));
+            $this->sum += (int)$line;
+            if (array_key_exists($this->sum, $this->seen)) {
+                break;
+            } else {
+                $this->seen[$this->sum] = 1;
+            }
+            if (!next($this->input)) {
+                reset($this->input);
             }
         }
     }

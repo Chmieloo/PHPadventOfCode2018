@@ -8,14 +8,31 @@ class PuzzlePartOne extends Puzzle
 
     public function processInput()
     {
+        $twos = 0;
+        $threes = 0;
         foreach ($this->input as $line) {
-            $splitLine = explode("\t", trim($line));
+            $lineLetters = str_split(trim($line));
 
-            $biggestNumber = max($splitLine);
-            $smallestNumber = min($splitLine);
-            $difference = $biggestNumber - $smallestNumber;
-            $this->sum += $difference;
+            $lineCounts = [];
+            foreach ($lineLetters as $lineLetter) {
+                if (array_key_exists($lineLetter, $lineCounts)) {
+                    $lineCounts[$lineLetter]++;
+                } else {
+                    $lineCounts[$lineLetter] = 1;
+                }
+            }
+
+            $lineCounts = array_flip($lineCounts);
+
+            if (array_key_exists(2, $lineCounts)) {
+                $twos++;
+            }
+            if (array_key_exists(3, $lineCounts)) {
+                $threes++;
+            }
         }
+
+        $this->sum = $twos * $threes;
     }
 
     public function renderSolution()

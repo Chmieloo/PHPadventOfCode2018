@@ -8,26 +8,25 @@ class PuzzlePartTwo extends Puzzle
 
     public function processInput()
     {
-        foreach ($this->input as $line) {
-            $splitLine = explode("\t", trim($line));
-            $divisible = $this->findEvenlyDivisible($splitLine);
-            $this->sum += $divisible;
-        }
-    }
+        $strLen = strlen(trim($this->input[0]));
+        $arrayLen = count($this->input);
 
-    private function findEvenlyDivisible($array)
-    {
-        for ($i = 0; $i < count($array) - 1; $i++) {
-            for ($j = $i + 1; $j < count($array); $j++) {
-                $current = $array[$i];
-                $next = $array[$j];
+        for($i = 0; $i < $arrayLen - 1; $i++) {
+            for ($j = $i + 1; $j < $arrayLen; $j++) {
+                $str1 = trim($this->input[$i]);
+                $str2 = trim($this->input[$j]);
 
-                $bigger = max($current, $next);
-                $smaller = min($current, $next);
-
-                if ($bigger % $smaller == 0) {
-                    return ($bigger / $smaller);
+                $diff = similar_text($str1, $str2);
+                if ($diff == $strLen - 1) {
+                    break 2;
                 }
+            }
+        }
+
+        $this->sum = '';
+        for ($i = 0; $i < strlen($str1); $i++) {
+            if($str2[$i] == $str1[$i]) {
+                $this->sum .= $str1[$i];
             }
         }
     }

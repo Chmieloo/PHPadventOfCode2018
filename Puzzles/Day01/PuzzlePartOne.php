@@ -5,18 +5,13 @@ namespace Puzzles\Day01;
 class PuzzlePartOne extends Puzzle
 {
     private $sum = 0;
+    private $seen = [];
 
     public function processInput()
     {
-        $string = $this->input[0];
-        $string = $string . $string[0];
-        for ($i = 1; $i <= strlen($string) - 1; $i++) {
-            $next = $string[$i];
-            $current = $string[$i - 1];
-
-            if ($next == $current) {
-                $this->sum += $current;
-            }
+        foreach ($this->input as $line) {
+            $line = trim($line);
+            $this->sum += $line;
         }
     }
 
