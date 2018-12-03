@@ -19,7 +19,6 @@ class PuzzlePartTwo extends Puzzle
             $line = trim($line);
             $data = explode(" ", $line);
             $id = $data[0];
-            //$this->nonOverlap = $id;
             list($x, $y) = explode(",", trim($data[2], ":"));
             list($w, $h) = explode("x", $data[3]);
 
@@ -31,36 +30,30 @@ class PuzzlePartTwo extends Puzzle
                 $maxH = $y + $h;
             }
 
-            $checkSum = 0;
             for ($i = $x; $i < ($x + $w); $i++) {
                 for ($j = $y; $j < ($y + $h); $j++) {
-                    if (array_key_exists($i, $this->fabric) && array_key_exists($j, $this->fabric[$i])) {
-                        $this->fabric[$i][$j]++;
-                        $checkSum += $this->fabric[$i][$j];
+                    $this->fabric[$i][$j][] = $id;
+                }
+            }
+        }
+
+        $candidates = [];
+        foreach ($this->fabric as $row) {
+            foreach ($row as $ids) {
+                foreach ($ids as $id) {
+                    if (array_key_exists($id, $candidates)) {
+                        $candidates[$id] *= count($ids);
                     } else {
-                        $this->fabric[$i][$j] = 1;
-                        $checkSum += 1;
+                        $candidates[$id] = 1;
                     }
                 }
             }
-            echo $data[3] . ' ' . $checkSum . PHP_EOL;
-            if ($checkSum == ($w * $h)) {
-                $this->nonOverlap = $id;
-            }
         }
 
-        for ($i = 0; $i < $maxH; $i++) {
-            for ($j = 0; $j < $maxW; $j++) {
-                if (!$this->fabric[$i][$j]) {
-                    echo '. ';
-                } else {
-                    echo $this->fabric[$i][$j] . ' ';
-                }
-            }
-            echo PHP_EOL;
-        }
+        print_r($candidates);
 
-        echo $this->nonOverlap . PHP_EOL;
+        $candidates = array_flip($candidates);
+        $this->sum = $candidates[1];
     }
 
     public function renderSolution()
