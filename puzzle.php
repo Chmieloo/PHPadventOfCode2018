@@ -1,5 +1,7 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ERROR);
+ini_set('memory_limit','2048M');
+
 $loader = require 'vendor/autoload.php';
 
 $options = getopt('d:p:');

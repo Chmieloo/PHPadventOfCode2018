@@ -37,22 +37,19 @@ class PuzzlePartTwo extends Puzzle
             }
         }
 
+        $sum = 0;
         $candidates = [];
         foreach ($this->fabric as $row) {
             foreach ($row as $ids) {
                 foreach ($ids as $id) {
-                    if (array_key_exists($id, $candidates)) {
-                        $candidates[$id] *= count($ids);
-                    } else {
-                        $candidates[$id] = 1;
-                    }
+                    $candidates[$id] = max(count($ids), $candidates[$id]);    
                 }
             }
         }
 
-        print_r($candidates);
-
+        asort($candidates);
         $candidates = array_flip($candidates);
+
         $this->sum = $candidates[1];
     }
 
