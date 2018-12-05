@@ -9,23 +9,28 @@ class PuzzlePartOne extends Puzzle
 
     public function processInput()
     {
+        $al = str_split('abcdefghijklmnopqrstuvwxyz', 1);
         $line = trim($this->input[0]);
 
-        do {
-            $changes = 0;
-            for ($i=0;$i<strlen($line);$i++) {
-                if (strtolower($line[$i]) == strtolower($line[$i+1])  && !($line[$i] === $line[$i+1])) {
-                    $line[$i] = 0;
-                    $line[$i+1] = 0;
-                    $changes++;
-                }
+        $this->sum = $this->polymerLength($line);
+    }
 
-                $line = str_replace(0, "", $line);
+    private function polymerLength($line)
+    {
+        $al = str_split('abcdefghijklmnopqrstuvwxyz', 1);
+        while (true) {
+            $len = strlen($line);
+            foreach($al as $letter) {
+                $line = str_replace($letter . strtoupper($letter), "", $line);
+                $line = str_replace(strtoupper($letter) . $letter, "", $line);
+            }
+
+            if (strlen($line) == $len) {
+                break;
             }
         }
-        while ($changes > 0);
 
-        $this->sum = strlen($line);
+        return strlen($line);
     }
 
     public function renderSolution()
