@@ -4,7 +4,6 @@ namespace Puzzles\Day05;
 
 class PuzzlePartOne extends Puzzle
 {
-    private $fabric = [];
     private $sum = 0;
 
     public function processInput()
