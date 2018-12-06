@@ -56,11 +56,18 @@ class PuzzlePartOne extends Puzzle
             }
         }
 
-        echo $maxX;
-        echo $maxY;
-
-        print_r($this->view);
+        $this->draw();
         $this->sum = strlen($line);
+    }
+
+    public function draw()
+    {
+        for ($i=0;$i<$maxX;$i++) {
+            for ($j=0;$j<$maxY;$j++) {
+                echo $this->view[$i][$j] . "\t";
+            }
+            echo PHP_EOL;
+        }
     }
 
     public function getDistance($x1, $y1, $x2, $y2)
