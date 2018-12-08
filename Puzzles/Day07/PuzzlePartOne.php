@@ -64,11 +64,12 @@ class PuzzlePartOne extends Puzzle
             }
         }
 
+        ksort($this->waits);
         print_r($this->waits);
 
-        print_r($arr);
+        //print_r($arr);
         $tree = $this->parseTree($arr);
-        print_r($tree);
+        //print_r($tree);
 
         //$tree = $this->createTree($new1, array(current($new1)));
 
